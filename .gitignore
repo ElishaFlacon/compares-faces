@@ -1,0 +1,5 @@
+.venv/
+.venv/*
+
+# we havent secret keys with env so than dont ignore
+# env/
