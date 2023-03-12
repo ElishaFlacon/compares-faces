@@ -1,4 +1,3 @@
-from werkzeug.utils import secure_filename
 import uuid
 import os
 
@@ -11,7 +10,7 @@ class FileService():
             return
 
         # generate random name
-        filename = secure_filename(f'{uuid.uuid4()}.png')
+        filename = f'{uuid.uuid4()}.png'
 
         # save file
         path = os.path.join(os.environ.get('UPLOAD_FOLDER_PATH'), filename)
