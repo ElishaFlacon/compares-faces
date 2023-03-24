@@ -54,9 +54,9 @@ function App() {
                 <div className='pre-img-box'>
                     <img src={getFirstPicture} alt="" className='pre-img' />
 
-                    <label class="input-file">
+                    <label className="input-file">
                         <input type="file" name="file" onChange={e => { setValueSecondPicture(e.target.files); imageHandler(e) }} />
-                        <div class="input-file-btn">
+                        <div className="input-file-btn">
                             <img className='load-img' src={loadImg} alt="" />
                         </div>
                     </label>
@@ -69,9 +69,9 @@ function App() {
                 <div className='pre-img-box'>
                     <img src={getSecondPicture} alt="" className='pre-img' />
 
-                    <label class="input-file">
+                    <label className="input-file">
                         <input type="file" name="file" onChange={e => { setValueFirstPicture(e.target.files); imageHandler2(e) }} />
-                        <div class="input-file-btn">
+                        <div className="input-file-btn">
                             <img className='load-img' src={loadImg} alt="" />
                         </div>
                     </label>
