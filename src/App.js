@@ -43,8 +43,15 @@ function App() {
         formData.append('first_pic', valueFirstPicture[0]);
         formData.append('second_pic', valueSecondPicture[0]);
         const a = await axios.post('http://localhost:5000/api/post/face-verify', formData);
-        console.log(a.data[0])
-        setValueAnswer(String(a.data[0]));
+
+        console.log(a.data)
+
+        if (!a.data[0]) {
+            setValueAnswer('0%');
+            return;
+        }
+
+        setValueAnswer(String(`${(100 - (a.data[1] * 100)).toFixed(2)}%`));
     }
 
 
