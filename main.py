@@ -17,7 +17,7 @@ load_dotenv(find_dotenv())
 def verify():
     pictures = FileController.upload_pictures(request.files)
     if (not pictures):
-        return 'u stupid'
+        return 'err'
 
     verify_result = FaceController.face_verify(pictures)
     return verify_result

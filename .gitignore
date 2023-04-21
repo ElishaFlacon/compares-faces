@@ -1,5 +1,7 @@
 .venv/
 .venv/*
 
+**/__pycache__/
+__pycache__
 # we havent secret keys with env so than dont ignore
 # env/
