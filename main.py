@@ -5,6 +5,10 @@ from dotenv import load_dotenv, find_dotenv
 from app.file.file_controller import FileController
 from app.face.face_controller import FaceController
 from app.clear_folder.clear_folder import clear_folder
+import db
+
+
+DB = db.DataBase()
 
 
 app = Flask(__name__)
@@ -16,10 +20,23 @@ load_dotenv(find_dotenv())
 @cross_origin()
 def verify():
     pictures = FileController.upload_pictures(request.files)
+
     if (not pictures):
         return 'err'
 
     verify_result = FaceController.face_verify(pictures)
+    return verify_result
+
+
+@app.route('/api/post/face-v', methods=['POST'])
+@cross_origin()
+def find():
+    picture = FileController.upload_picture(request.files)
+
+    if (not picture):
+        return 'err'
+
+    verify_result = FaceController.find_person(picture)
     return verify_result
 
 

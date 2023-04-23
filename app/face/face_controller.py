@@ -1,10 +1,14 @@
 # from app.encode.encode import PythonObjectEncoder, as_python_object
+# from json import dumps, loads
 from app.face.face_service import FaceService
-from json import dumps, loads
 import os
 
 
+FS = FaceService()
+
+
 class FaceController():
+    @staticmethod
     def face_verify(pictures):
         try:
             # get pictures
@@ -25,6 +29,18 @@ class FaceController():
             # переводим в бул потому что данные в верефиде имеют бул_
             # и их нельзя конвертировать в json
             return [bool(result['verified']), result['distance']]
+        except Exception as e:
+            print(e)
+            raise Exception('bad request: 400')
+
+    @staticmethod
+    def find_person(picture):
+        try:
+            result = FaceService.find_person(
+                f'{os.environ.get("UPLOAD_FOLDER_PATH")}/{picture}'
+            )
+
+            return result
         except Exception as e:
             print(e)
             raise Exception('bad request: 400')
