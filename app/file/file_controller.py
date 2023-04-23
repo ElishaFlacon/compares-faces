@@ -2,6 +2,7 @@ from app.file.file_service import FileService
 
 
 class FileController():
+    @staticmethod
     # upload two pictures
     def upload_pictures(pictures):
         try:
@@ -24,6 +25,22 @@ class FileController():
             }
 
             return pictures_dict
+        except Exception as e:
+            print(e)
+            raise Exception('bad request: 400')
+
+    @staticmethod
+    # upload picture
+    def upload_picture(picture):
+        try:
+            picture = picture['picture']
+
+            # check filename
+            if picture.filename == '':
+                return
+
+            # save and return file name
+            return FileService.save_file(picture)
         except Exception as e:
             print(e)
             raise Exception('bad request: 400')
