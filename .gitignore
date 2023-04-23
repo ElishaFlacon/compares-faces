@@ -2,6 +2,9 @@
 .venv/*
 
 **/__pycache__/
-__pycache__
+
+.vscode/*
+.vscode/
+
 # we havent secret keys with env so than dont ignore
-# env/
+env/
