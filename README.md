@@ -1,9 +1,9 @@
 <h1> 
-     😜❔😝 Compares Faces
+     😜❔😝 Compares Faces (DOSY, ДОСЯ)
 </h1>
 
 <h3>
-Fullstack приложение - сравнивает сходства лиц
+Fullstack приложение - сравнивает сходства лиц и не только...
 </h3>
 
 
