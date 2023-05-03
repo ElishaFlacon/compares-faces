@@ -1,0 +1,16 @@
+.venv/
+.venv/*
+
+**/__pycache__/
+
+.vscode/*
+.vscode/
+
+**/node_modules
+
+**/build
+
+**/.env
+.env
+
+/server/app/static/*.png
