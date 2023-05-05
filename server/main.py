@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request
+from flask import Flask, request, send_file
 from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv, find_dotenv
 from app.file.file_controller import FileController
@@ -16,10 +16,17 @@ cors = CORS(app)
 load_dotenv(find_dotenv())
 
 
+@app.route('/get_image')
+def get_image():
+    file = request.args.get('name')
+    filename = f'app/static/{file}'
+    return send_file(filename, mimetype='image/png')
+
+
 @app.route('/api/get/test', methods=['GET'])
 @cross_origin()
 def test():
-    return {'Hello': 'World!'}
+    return {'dima': 'abobus'}
 
 
 @app.route('/api/post/face-verify', methods=['POST'])
