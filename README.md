@@ -55,7 +55,7 @@ Fullstack приложение - сравнивает сходства лиц и
 </h2>
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/83610362/231952973-0242a2d9-ac82-4c68-931a-361c81c1d0e4.gif"/>
+  <img src="https://user-images.githubusercontent.com/83610362/236540676-9cc6e71f-a161-42f1-88f9-c86d4ea90a1d.gif"/>
 </p>
 
 
