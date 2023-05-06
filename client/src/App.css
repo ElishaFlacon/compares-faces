@@ -101,3 +101,27 @@
     height: 128px;
     padding-bottom: 16px;
 }
+
+
+
+.modal-c::-webkit-scrollbar {
+    width: 12px;
+}
+
+.modal-c::-webkit-scrollbar-track {
+    background: #fff;
+    border-radius: 8px;
+}
+
+.modal-c::-webkit-scrollbar-thumb {
+    background-color: #9e9e9e;
+    border: solid 2px #fff;
+    border-radius: 8px;
+}
+
+.imgm {
+    border-radius: 8px;
+    padding: 4px;
+    max-width: 128px;
+    max-height: 128px;
+}

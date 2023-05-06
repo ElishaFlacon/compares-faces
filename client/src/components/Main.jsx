@@ -1,7 +1,48 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { IconButton, Button, Switch, Container, Stack, Typography, Box, Paper, Grid, Slider, TextField, FormControl, Select, MenuItem, InputLabel, Card } from '@mui/material';
+import {
+    IconButton,
+    Button,
+    Switch,
+    Container,
+    Stack,
+    Typography,
+    Box, Paper,
+    Grid,
+    Slider,
+    TextField,
+    FormControl,
+    Select,
+    MenuItem,
+    InputLabel,
+    CircularProgress,
+    Modal,
+    Card
+} from '@mui/material';
 
+
+const style = {
+    position: 'absolute',
+
+    display: 'flex',
+    flexDirection: 'column',
+
+    margin: 'auto',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+
+    width: 700,
+    height: 500,
+
+    bgcolor: 'background.paper',
+    // border: '2px solid #000',
+    borderRadius: '8px',
+    boxShadow: 24,
+    p: 4,
+
+    overflowY: 'scroll',
+};
 
 function Main() {
 
@@ -15,6 +56,10 @@ function Main() {
     // const handleC = (event) => {
     //     setAge(event.target.value);
     // };
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => { setOpen(false); setChoto(''); setValuePicture(''); }
 
 
     const [valuePicture, setValuePicture] = useState('');
@@ -40,43 +85,65 @@ function Main() {
     const yahzkaknazvattibya = async () => {
         const data = await findPerson()
 
-        setChoto(data.map((person) => {
-            console.log(person);
+        setChoto(
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
 
-            return (
-                <Card
-                    raised
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
+                    borderRadius: '4px',
 
-                        padding: '12px',
+                    gap: '24px',
+                }}
+            >
+                {data.map((person) => {
 
-                        textAlign: 'start',
-                        alignItems: 'flex-start',
-                    }}
-                >
+                    return (
+                        <Card
+                            key={person[1]}
+                            raised
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
 
-                    <img className='testimg' src={`http://localhost:5000/get_image?name=${person[1]}`} alt=" " />
+                                gap: '24px',
+                                padding: '12px',
 
-                    <Typography>
-                        ИМЯ: {person[0][0][1]}
-                    </Typography>
+                                textAlign: 'start',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    display: 'flex',
 
-                    <Typography>
-                        ВОЗРАСТ: {person[0][0][2]}
-                    </Typography>
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
 
-                    <Typography>
-                        ПОЛ: {person[0][0][3]}
-                    </Typography>
+                                    width: '128px',
+                                    height: '128px',
+                                }}
+                            >
+                                <img className='imgm' src={`http://localhost:5000/get_image?name=${person[1]}`} alt=" " />
+                            </Box>
 
-                    <Typography>
-                        ОПИСАНИЕ: {person[0][0][4]}
-                    </Typography>
-                </Card>
-            );
-        }))
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                }}>
+
+                                <Typography>
+                                    {person[0][0][1]}, {person[0][0][2]} лет, пол {person[0][0][3]}. {person[0][0][4]}
+                                </Typography>
+
+                            </Box>
+                        </Card>
+                    );
+                })}
+
+            </Box>
+        )
     }
 
 
@@ -147,6 +214,38 @@ function Main() {
                     square
                     elevation={3}
                 > */}
+
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box
+                        className='modal-c'
+                        sx={style}
+                    >
+                        <Typography id="modal-modal-title" align='center' variant="h6" component="h2" sx={{ paddingBottom: '24px' }}>
+                            {cheto ? `Найдено результатов: ${cheto.props.children.length}` : 'Ожидайте...'}
+                        </Typography>
+
+                        {cheto ? cheto :
+                            <Box
+                                sx={{
+                                    position: 'absolute',
+                                    margin: 'auto',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+
+                                }}
+                            >
+                                <CircularProgress size={'128px'} />
+                            </Box>
+                        }
+                    </Box>
+                </Modal>
+
                 <Box
                     sx={{
                         display: 'flex',
@@ -189,7 +288,9 @@ function Main() {
                             variant="outlined"
                             component='button'
 
-                            onClick={yahzkaknazvattibya}
+                            disabled={valuePicture ? false : true}
+
+                            onClick={() => { yahzkaknazvattibya(); handleOpen(); }}
                         >
                             найти
                         </Button>
@@ -250,17 +351,6 @@ function Main() {
                         </Grid>
                     </Grid> */}
                 {/* </Paper> */}
-
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-
-                        gap: '24px',
-                    }}
-                >
-                    {cheto}
-                </Box>
 
             </Container>
 
