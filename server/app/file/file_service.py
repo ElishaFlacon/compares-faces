@@ -4,8 +4,7 @@ import os
 
 class FileService():
     # save file to a static folder
-    @staticmethod
-    def save_file(file):
+    def save_file(self, file):
         # checking for file availability
         if (not file):
             return

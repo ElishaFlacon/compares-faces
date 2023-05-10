@@ -1,71 +1,80 @@
-import os
 from flask import Flask, request, send_file
 from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv, find_dotenv
 from app.file.file_controller import FileController
-from app.face.face_controller import FaceController
-from app.clear_folder.clear_folder import clear_folder
-import db
-
-
-DB = db.DataBase()
+from app.recognizer.recognizer_controller import RecognizerController
+from app.person.person_controller import PersonController
 
 
 app = Flask(__name__)
 cors = CORS(app)
 load_dotenv(find_dotenv())
 
+fileController = FileController()
+recognizerController = RecognizerController()
+personController = PersonController()
 
-@app.route('/get_image')
+
+@app.route('/api/get/image', methods=['GET'])
+@cross_origin()
 def get_image():
     file = request.args.get('name')
-    filename = f'app/static/{file}'
-    return send_file(filename, mimetype='image/png')
+    path = f'app/static/{file}'
+    return send_file(path, mimetype='image/png')
 
 
-@app.route('/api/get/test', methods=['GET'])
+@app.route('/api/post/upload-person', methods=['POST'])
 @cross_origin()
-def test():
-    return {'dima': 'abobus'}
+def upload_person():
+    picture = fileController.upload_picture(request.files)
 
-
-@app.route('/api/post/face-verify', methods=['POST'])
-@cross_origin()
-def verify():
-    pictures = FileController.upload_pictures(request.files)
-
-    if (not pictures):
-        return 'err'
-    verify_result = FaceController.face_verify(pictures)
-    return verify_result
-
-
-@app.route('/api/post/face-v', methods=['POST'])
-@cross_origin()
-def find():
-    print(request.files)
-    picture = FileController.upload_picture(request.files)
+    print(request.values.dicts[1])
 
     if (not picture):
-        return 'err'
+        return 'error'
 
-    verify_result = FaceController.find_person(picture)
-    return verify_result
+    return request.values.dicts[1]
 
 
-# this is necessary so that the static folder is not clogged
-# because there are restrictions on the allowed size on free hosting
-@app.route('/api/clear', methods=['DELETE'])
+@app.route('/api/post/compare', methods=['POST'])
 @cross_origin()
-def clear():
-    clear_folder(os.environ.get('UPLOAD_FOLDER_PATH'))
-    return 'clear'
+def compare():
+    pictures = fileController.upload_pictures(request.files)
+
+    if (not pictures):
+        return 'error'
+
+    result = recognizerController.comparison_faces(pictures)
+    return result
+
+
+@app.route('/api/post/search', methods=['POST'])
+@cross_origin()
+def search():
+    # if we know filename in fronted, so we can send it as a parameter from frontend
+    picture = request.args.get('picture')
+
+    if (not picture):
+        picture = fileController.upload_picture(request.files)
+
+    if (not picture):
+        return 'error'
+
+    result = personController.find_person(picture)
+    return result
+
+
+@app.route('/api/post/detect', methods=['POST'])
+@cross_origin()
+def detect():
+    picture = fileController.upload_picture(request.files)
+
+    if (not picture):
+        return 'error'
+
+    result = recognizerController.detect_face(picture)
+    return result
 
 
 if __name__ == '__main__':
-    # for development
     app.run()
-
-    # for production
-    # from waitress import serve
-    # serve(app, host="0.0.0.0", port=5000)

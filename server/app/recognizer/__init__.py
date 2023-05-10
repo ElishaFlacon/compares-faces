@@ -1,0 +1,2 @@
+from app.recognizer.recognizer_service import RecognizerService
+from app.recognizer.recognizer_controller import RecognizerController

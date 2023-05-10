@@ -1,10 +1,12 @@
 from app.file.file_service import FileService
 
 
+fileService = FileService()
+
+
 class FileController():
-    @staticmethod
     # upload two pictures
-    def upload_pictures(pictures):
+    def upload_pictures(self, pictures):
         try:
             # checking for pictures availability
             if 'first_pic' not in pictures or 'second_pic' not in pictures:
@@ -20,8 +22,8 @@ class FileController():
 
             # save and create dict
             pictures_dict = {
-                'first_pic': FileService.save_file(first_pic),
-                'second_pic': FileService.save_file(second_pic),
+                'first_pic': fileService.save_file(first_pic),
+                'second_pic': fileService.save_file(second_pic),
             }
 
             return pictures_dict
@@ -29,9 +31,8 @@ class FileController():
             print(e)
             raise Exception('bad request: 400')
 
-    @staticmethod
     # upload picture
-    def upload_picture(picture):
+    def upload_picture(self, picture):
         try:
             picture = picture['picture']
 
@@ -40,7 +41,7 @@ class FileController():
                 return
 
             # save and return file name
-            return FileService.save_file(picture)
+            return fileService.save_file(picture)
         except Exception as e:
             print(e)
             raise Exception('bad request: 400')
