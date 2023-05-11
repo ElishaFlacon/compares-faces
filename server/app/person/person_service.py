@@ -31,6 +31,9 @@ class PersonService():
 
         picture_data = database.cursor.fetchall()
 
+        # save data to database
+        database.connect.commit()
+
         return {
             'load': True,
             'data': {
