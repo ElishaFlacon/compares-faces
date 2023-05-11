@@ -10,8 +10,34 @@ recognizerService = RecognizerService()
 class PersonService():
     upload_path = os.environ.get("UPLOAD_FOLDER_PATH")
 
-    def new_person(self, data, picture):
-        return
+    def new_person(self, data):
+        database.cursor.execute(
+            "INSERT INTO person (fullname, age, sex, descripton) VALUES (%s,%s,%s,%s) RETURNING *;",
+            (
+                data.get('name'),
+                data.get('age'),
+                data.get('gender'),
+                data.get('description')
+            )
+        )
+
+        person = database.cursor.fetchall()
+        person_id = person[0][0]
+
+        database.cursor.execute(
+            "INSERT INTO faces (picture, person_id) VALUES (%s, %s) RETURNING *;",
+            (data.get('picture'), person_id)
+        )
+
+        picture_data = database.cursor.fetchall()
+
+        return {
+            'load': True,
+            'data': {
+                'person': person,
+                'picture': picture_data
+            }
+        }
 
     # find person from database
     def find_person(self, picture):

@@ -28,12 +28,11 @@ def get_image():
 def upload_person():
     picture = fileController.upload_picture(request.files)
 
-    print(request.values.dicts[1])
-
     if (not picture):
         return 'error'
 
-    return request.values.dicts[1]
+    result = personController.new_person(request.form, picture)
+    return result
 
 
 @app.route('/api/post/compare', methods=['POST'])
