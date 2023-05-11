@@ -13,5 +13,5 @@ create TABLE faces (
     FOREIGN KEY (person_id) references person(id)
 );
 
--- .\psql -U postgres
--- psql \! chcp 1251
+-- да я знаю что в первой таблице description написано не правильно
+-- это патаму чта мне плевать + весело + отстаньте + играюсь + попозже ультранасилие
