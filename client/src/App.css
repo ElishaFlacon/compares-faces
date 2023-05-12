@@ -1,127 +1,86 @@
-.App {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    background-color: #666666;
-    color: #000000;
-    font-size: 24px;
-}
-
-.pre-img-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 80px;
-    margin-bottom: 50px;
-}
-
-.pre-img-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.form {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 120px;
-}
-
-.compare-img,
-.load-img {
-    margin: 60px 0px 0px 0px;
-    padding: 5px;
-    max-width: 80px;
-    max-height: 80px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.compare-img:hover,
-.load-img:hover {
-    margin: 65px 0px 0px 0px;
-    max-width: 75px;
-    max-height: 75px;
-    background: #404040;
-    border-radius: 15px;
-}
-
-.pre-img {
-    max-height: 320px;
-    max-width: 320px;
-}
-
-.compare-img {
-    margin: 0px;
-}
-
-.compare-img:hover {
-    margin: 5px 0 0 0;
-}
-
-.testimg {
-    max-width: 24px;
-    max-width: 24px;
-}
-
-.main {
-    margin-bottom: 10000px;
-}
-
-.asd {
-    color: #000000;
-}
-
-.jopa {
-    display: flex;
-    flex-direction: column;
+.app {
     min-height: 100vh;
     font-size: 13px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+.header {
+    padding: 8px 16px 4px 16px;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    font-size: 13px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+}
+
+.text-block {
+    padding: 16px;
+    max-width: 580px;
+}
+
+.icon-image {
+    max-width: 24px;
+    max-width: 24px;
+}
+
 .dosy-logo {
-    background: url('assets/images/dosy_full_logo.png') no-repeat;
+    background: url('assets/dosy_full_logo.png') no-repeat;
     background-size: 388px 170px;
     width: 388px;
     height: 170px;
 }
 
 .choise-file {
-    background: url('assets/images/choice_file.png') no-repeat;
+    background: url('assets/choice_file.png') no-repeat;
     background-size: 128px 128px;
     width: 128px;
     height: 128px;
     padding-bottom: 16px;
 }
 
-
-
-.modal-c::-webkit-scrollbar {
-    width: 12px;
+.chosen-file {
+    background: url('assets/choicen_file.png') no-repeat;
+    background-size: 128px 128px;
+    width: 128px;
+    height: 128px;
+    padding-bottom: 16px;
 }
 
-.modal-c::-webkit-scrollbar-track {
-    background: #fff;
-    border-radius: 8px;
+.toglbtn {
+    width: 256px;
 }
 
-.modal-c::-webkit-scrollbar-thumb {
-    background-color: #9e9e9e;
-    border: solid 2px #fff;
-    border-radius: 8px;
+.flex-center-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
-.imgm {
-    border-radius: 8px;
-    padding: 4px;
-    max-width: 128px;
-    max-height: 128px;
+.flex-center-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.link {
+    color: #3399ff;
+    text-decoration: none;
+}
+
+.gap {
+    gap: 12px;
 }

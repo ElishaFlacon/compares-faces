@@ -1,0 +1,18 @@
+.ub-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.ub-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.ub-jc-end {
+    justify-content: flex-end;
+}
+
+.ub-al-end {
+    align-items: flex-end;
+    text-align: flex-end;
+}

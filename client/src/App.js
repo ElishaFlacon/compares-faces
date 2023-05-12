@@ -1,125 +1,184 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css';
+import { Container, Typography, ToggleButtonGroup, ToggleButton, Box } from '@mui/material';
+import Find from './components/Find';
+import ModalForResults from './components/ModalForResults';
+import Upload from './components/Upload';
+
+
+console.error('бро, закрой консоль!');
+
+
+// TODO сделать мемомизацию для всего! а то тут пиздец 
+// TODO и сделать модалочки, для вывода инфы когда были загружены файлы или не загружены
 
 
 function App() {
+    const aboutText = 'DOSY - сервис поиска людей по фотографии.\
+     Благодаря технологии нейронных сетей и машинному обучению\
+     мы поможем вам найти нужного человека или очень на него похожего\
+     в течение нескольких секунд.Результатом является полная информация о человеке.';
+
+    const liabilityText = 'Пожалуйста, не предоставляйте никакой личной информации.\
+     DOSY не несет ответственности за содержание вашей отправки.';
 
 
-    const defaultImg = 'https://cdn-icons-png.flaticon.com/512/3973/3973425.png';
-    const loadImg = 'https://cdn-icons-png.flaticon.com/512/4146/4146794.png';
-    const compareImg = 'https://cdn-icons-png.flaticon.com/512/5261/5261936.png';
+    // для загрузки фоток
+    const [valuePicture, setValuePicture] = useState('');
 
-    const [valueAnswer, setValueAnswer] = useState('...');
-
-    const [valueFirstPicture, setValueFirstPicture] = useState('');
-    const [valueSecondPicture, setValueSecondPicture] = useState('');
-
-    const [getFirstPicture, setGetFirstPicture] = useState(defaultImg);
-    const [getSecondPicture, setGetSecondPicture] = useState(defaultImg);
-
-    const imageHandler = (e) => {
-        if (!e.target.files[0]) {
-            return
-        }
-
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setGetFirstPicture(reader.result);
-            }
-        }
-
-        reader.readAsDataURL(e.target.files[0]);
-    }
-
-    const imageHandler2 = (e) => {
-        if (!e.target.files[0]) {
-            return
-        }
-
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setGetSecondPicture(reader.result);
-            }
-        }
-
-        reader.readAsDataURL(e.target.files[0]);
-    }
-
-    const onConfirm = async () => {
-        const formData = new FormData();
-        formData.append('first_pic', valueFirstPicture[0]);
-        formData.append('second_pic', valueSecondPicture[0]);
-        const a = await axios.post('http://localhost:5000/api/post/face-verify', formData);
-
-        console.log(a.data)
-
-        if (!a.data[0]) {
-            setValueAnswer('0%');
+    const uploadPictureHandler = (event) => {
+        if (!event.target.files[0]) {
             return;
         }
 
-        setValueAnswer(String(`${(100 - (a.data[1] * 100)).toFixed(2)}%`));
+        setValuePicture(event.target.files);
     }
 
-    const findPerson = async () => {
-        const formData = new FormData();
-        formData.append('picture', valueFirstPicture[0]);
-        const a = await axios.post('http://localhost:5000/api/post/face-v', formData);
 
-        console.log(a.data);
+    // для загрузки данных нового человека
+    const [valueNewPerson, setValueNewPerson] = useState({
+        name: '',
+        age: '',
+        gender: '',
+        description: '',
+    });
+
+    const newPersonHandler = (newValue) => {
+        setValueNewPerson({
+            ...valueNewPerson,
+            ...newValue,
+        });
+    }
+
+    const uploadHandler = async () => {
+        const formData = new FormData();
+
+        formData.append('picture', valuePicture[0]);
+        for (const [key, value] of Object.entries(valueNewPerson)) {
+            formData.append(key, value);
+        }
+
+        setValuePicture('');
+        setValueNewPerson({
+            name: '',
+            age: '',
+            gender: '',
+            description: '',
+        });
+
+        const response = await axios.post('http://localhost:5000/api/post/upload-person', formData);
+
+        if (!response.data.load) {
+            alert('Данные не были загружены! Возможно программа не может распознать лицо на фото!');
+            return;
+        }
+
+        alert('Данные были загружены!');
+
+        return response.data;
+    }
+
+
+    // для получения данных о найденых людях с сервера
+    const [valuePersons, setValuePersons] = useState('');
+
+    const findPersons = async () => {
+        const formData = new FormData();
+        formData.append('picture', valuePicture[0]);
+
+        const response = await axios.post('http://localhost:5000/api/post/search', formData);
+
+        if (!response.data.load) {
+            alert('Данные не были получены! Возможно программа не может распознать лицо на фото!');
+        }
+
+        return response.data;
+    }
+
+    const findHandler = async () => {
+        ModalHasOpen();
+
+        const data = await findPersons();
+
+        if (!data.load) {
+            ModalHasClose();
+            setValuePersons();
+            return;
+        }
+
+        setValuePersons(data);
+    }
+
+
+    // для модального окна с результатами поиска
+    const [modalState, setModalState] = useState(false);
+    const ModalHasOpen = () => setModalState(true);
+    const ModalHasClose = () => {
+        setValuePicture('');
+        setValuePersons('');
+        setModalState(false);
+    }
+
+
+    // для меню выбора функции найти или загрузить
+    const [menu, setMenu] = useState('find');
+    const menuChange = (event, select) => {
+        if (!select) {
+            return;
+        }
+
+        setMenu(select);
     }
 
 
     return (
-        <div className="App">
-            <div className='pre-img-container'>
-                <div className='pre-img-box'>
-                    <img src={getFirstPicture} alt="" className='pre-img' />
+        <Container className='app'>
+            <Box className='main flex-center-column'>
+                <div className="dosy-logo" />
 
-                    <label className="input-file">
-                        <input type="file" name="file" onChange={e => { setValueSecondPicture(e.target.files); imageHandler(e) }} />
-                        <div className="input-file-btn">
-                            <img className='load-img' src={loadImg} alt="" />
-                        </div>
-                    </label>
-                </div>
+                <Typography className='text-block' fontSize={13}>
+                    {aboutText}
+                </Typography>
 
+                <ToggleButtonGroup color="primary" value={menu} exclusive onChange={menuChange}>
+                    <ToggleButton className='toglbtn' value="find">Поиск</ToggleButton>
+                    <ToggleButton className='toglbtn' value="upload">Загрузить</ToggleButton>
+                </ToggleButtonGroup>
 
-                <div className='answer'>{valueAnswer}</div>
+                {menu === 'find'
+                    ? <Find
+                        picture={valuePicture}
+                        pictureHandler={uploadPictureHandler}
 
+                        findHandler={findHandler}
+                    />
+                    : <Upload
+                        picture={valuePicture}
+                        pictureHandler={uploadPictureHandler}
 
-                <div className='pre-img-box'>
-                    <img src={getSecondPicture} alt="" className='pre-img' />
+                        person={valueNewPerson}
+                        changeHandler={newPersonHandler}
 
-                    <label className="input-file">
-                        <input type="file" name="file" onChange={e => { setValueFirstPicture(e.target.files); imageHandler2(e) }} />
-                        <div className="input-file-btn">
-                            <img className='load-img' src={loadImg} alt="" />
-                        </div>
-                    </label>
-                </div>
-            </div>
+                        uploadHandler={uploadHandler}
+                    />
+                }
 
+                <ModalForResults open={modalState} closeHandler={ModalHasClose} data={valuePersons} />
 
-            {/* <button onClick={onConfirm}>
-                <h1>
-                    сравнить
-                </h1>
-                <img className='compare-img' src={compareImg} alt="send" />
-            </button> */}
+                <Typography className='text-block' fontSize={13}>
+                    {liabilityText}
+                </Typography>
 
-            <button onClick={findPerson}>
-                <h1>
-                    найти
-                </h1>
-                <img className='compare-img' src={compareImg} alt="send" />
-            </button>
-        </div>
+                <Typography className='text-block' fontSize={13}>
+                    🛈 Наше приложение имеет открытый {
+                        <a rel="noreferrer" className='link' href="https://github.com/ElishaFlacon/compares-faces">
+                            исходынй код
+                        </a>
+                    }.
+                </Typography>
+            </Box>
+        </Container>
     );
 }
 
