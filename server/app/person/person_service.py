@@ -68,4 +68,4 @@ class PersonService():
                 'description': person[0][4],
             })
 
-        return result
+        return {'data': result, 'load': True}

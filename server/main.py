@@ -31,6 +31,10 @@ def upload_person():
     if (not picture):
         return 'error'
 
+    face_detect = recognizerController.detect_face(picture)
+    if (not face_detect.get('detect')):
+        return {'load': False}
+
     result = personController.new_person(request.form, picture)
     return result
 
@@ -58,6 +62,10 @@ def search():
 
     if (not picture):
         return 'error'
+
+    face_detect = recognizerController.detect_face(picture)
+    if (not face_detect.get('detect')):
+        return {'load': False}
 
     result = personController.find_person(picture)
     return result
