@@ -33,7 +33,7 @@
 
 
 <h2>
-  🚀 Зпуск приложения (пока что не работает):
+  🚀 Зпуск приложения:
 </h2>
 
 - `git clone https://github.com/ElishaFlacon/dosy.git`
