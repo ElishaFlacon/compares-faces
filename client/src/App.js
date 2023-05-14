@@ -44,11 +44,8 @@ function App() {
         description: '',
     });
 
-    const newPersonHandler = (newValue) => {
-        setValueNewPerson({
-            ...valueNewPerson,
-            ...newValue,
-        });
+    const newPersonHandler = (value) => {
+        setValueNewPerson(value);
     }
 
     const uploadHandler = async () => {

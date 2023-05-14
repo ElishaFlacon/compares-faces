@@ -26,20 +26,20 @@ function Upload(props) {
                     <Box className={'ub-column gap'}>
                         <TextField
                             value={props.person.name}
-                            onChange={(event) => props.changeHandler({ name: event.target.value })}
+                            onChange={(event) => props.changeHandler({ ...props.person, name: event.target.value })}
                             label="ФИО"
                             variant="outlined"
                         />
                         <TextField
                             value={props.person.age}
-                            onChange={(event) => props.changeHandler({ age: event.target.value })}
+                            onChange={(event) => props.changeHandler({ ...props.person, age: event.target.value })}
                             label="Возраст"
                             variant="outlined"
                             type='number'
                         />
                         <TextField
                             value={props.person.gender}
-                            onChange={(event) => props.changeHandler({ gender: event.target.value })}
+                            onChange={(event) => props.changeHandler({ ...props.person, gender: event.target.value })}
                             label="Пол"
                             variant="outlined"
                         />
@@ -47,7 +47,7 @@ function Upload(props) {
 
                     <TextField
                         value={props.person.description}
-                        onChange={(event) => props.changeHandler({ description: event.target.value })}
+                        onChange={(event) => props.changeHandler({ ...props.person, description: event.target.value })}
                         label="Описание"
                         variant="outlined"
                         multiline
