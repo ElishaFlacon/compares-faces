@@ -7,11 +7,13 @@ import ModalForResults from './components/ModalForResults';
 import Upload from './components/Upload';
 
 
-console.error('бро, закрой консоль!');
+// console.error('бро, закрой консоль!');
 
 
 // TODO сделать мемомизацию для всего! а то тут пиздец 
 // TODO и сделать модалочки, для вывода инфы когда были загружены файлы или не загружены
+// TODO настроить роуты
+// TODO добавить config.js и туда вынести текст и дефолт адресс и всякое такое
 
 
 function App() {
@@ -27,7 +29,8 @@ function App() {
     // для загрузки фоток
     const [valuePicture, setValuePicture] = useState('');
 
-    const uploadPictureHandler = (event) => {
+    const pictureHandler = (event) => {
+        console.log('pictureHandler');
         if (!event.target.files[0]) {
             return;
         }
@@ -45,10 +48,12 @@ function App() {
     });
 
     const newPersonHandler = (value) => {
+        console.log('valueperson');
         setValueNewPerson(value);
     }
 
     const uploadHandler = async () => {
+        console.log('uploadHandler');
         const formData = new FormData();
 
         formData.append('picture', valuePicture[0]);
@@ -80,38 +85,18 @@ function App() {
     // для получения данных о найденых людях с сервера
     const [valuePersons, setValuePersons] = useState('');
 
-    const findPersons = async () => {
-        const formData = new FormData();
-        formData.append('picture', valuePicture[0]);
-
-        const response = await axios.post('http://localhost:5000/api/post/search', formData);
-
-        if (!response.data.load) {
-            alert('Данные не были получены! Возможно программа не может распознать лицо на фото!');
-        }
-
-        return response.data;
-    }
-
-    const findHandler = async () => {
-        ModalHasOpen();
-
-        const data = await findPersons();
-
-        if (!data.load) {
-            ModalHasClose();
-            setValuePersons();
-            return;
-        }
-
+    const getPersons = (data) => {
         setValuePersons(data);
     }
 
 
     // для модального окна с результатами поиска
     const [modalState, setModalState] = useState(false);
-    const ModalHasOpen = () => setModalState(true);
-    const ModalHasClose = () => {
+
+    const modalHasOpen = () => {
+        setModalState(true);
+    }
+    const modalHasClose = () => {
         setValuePicture('');
         setValuePersons('');
         setModalState(false);
@@ -121,12 +106,15 @@ function App() {
     // для меню выбора функции найти или загрузить
     const [menu, setMenu] = useState('find');
     const menuChange = (event, select) => {
+        console.log('menuChange');
         if (!select) {
             return;
         }
 
         setMenu(select);
     }
+
+    // const selectedOptions = 
 
 
     return (
@@ -146,13 +134,16 @@ function App() {
                 {menu === 'find'
                     ? <Find
                         picture={valuePicture}
-                        pictureHandler={uploadPictureHandler}
+                        pictureHandler={pictureHandler}
 
-                        findHandler={findHandler}
+                        modalOpen={modalHasOpen}
+                        modalClose={modalHasClose}
+
+                        getPersons={getPersons}
                     />
                     : <Upload
                         picture={valuePicture}
-                        pictureHandler={uploadPictureHandler}
+                        pictureHandler={pictureHandler}
 
                         person={valueNewPerson}
                         changeHandler={newPersonHandler}
@@ -161,7 +152,7 @@ function App() {
                     />
                 }
 
-                <ModalForResults open={modalState} closeHandler={ModalHasClose} data={valuePersons} />
+                <ModalForResults open={modalState} closeHandler={modalHasClose} data={valuePersons} />
 
                 <Typography className='text-block' fontSize={13}>
                     {liabilityText}
