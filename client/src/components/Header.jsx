@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconButton, Button, Switch, Stack, } from '@mui/material';
+import '../styles/Header.css';
 
 
 function Header() {
