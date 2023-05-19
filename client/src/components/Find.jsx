@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Box } from '@mui/material';
 import axios from 'axios';
+import config from '../config';
 import PictureLoader from './PictureLoader';
 
 
@@ -10,7 +11,7 @@ function Find(props) {
         const formData = new FormData();
         formData.append('picture', props.picture[0]);
 
-        const response = await axios.post('http://localhost:5000/api/post/search', formData);
+        const response = await axios.post(`${config.api}/api/post/search`, formData);
 
         if (!response.data.load) {
             alert('Данные не были получены! Возможно программа не может распознать лицо на фото!');
