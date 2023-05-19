@@ -35,16 +35,16 @@ function Upload(props) {
         const response = await axios.post(`${config.api}/api/post/upload-person`, formData);
 
         if (!response.data.load) {
-            alert('Данные не были загружены! Возможно программа не может распознать лицо на фото!');
+            props.setSnack([true, 'Данные не были загружены, возможно на фото не возможно распознать лицо!', "error"])
             return;
         }
-        alert('Данные были загружены!');
+        props.setSnack([true, 'Данные были загружены!', "success"])
 
         return response.data;
     }
 
     const clear = () => {
-        props.setPicture()
+        props.setPicture('')
         setPerson({
             name: '',
             age: '',

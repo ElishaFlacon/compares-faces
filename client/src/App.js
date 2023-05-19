@@ -7,6 +7,7 @@ import Upload from './components/Upload';
 import ModalForResults from './components/ModalForResults';
 import Text from './components/Text';
 import Menu from './components/Menu';
+import Snack from './components/Snack';
 import config from './config';
 
 
@@ -31,16 +32,26 @@ function App() {
         setModalState(false);
     }
 
+    // для снекбара
+    const [snack, setSnack] = useState(false);
+    const snackClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnack(false);
+    };
+    const snackOpen = (text, severity) => {
+        setSnack([true, severity, text]);
+    }
+
     // для меню выбора функции найти или загрузить
     const [menu, setMenu] = useState('find');
     const menuChange = (event, select) => {
         if (!select) {
             return;
         }
-
         setMenu(select);
     }
-
 
     const selectedOption = useMemo(() => {
         if (menu === 'find') {
@@ -53,11 +64,13 @@ function App() {
                     modalClose={modalHasClose}
 
                     getPersons={getPersons}
+
+                    setSnack={setSnack}
                 />
             );
         }
 
-        return <Upload picture={valuePicture} setPicture={setValuePicture} />;
+        return <Upload picture={valuePicture} setPicture={setValuePicture} setSnack={setSnack} />;
     }, [menu, valuePicture])
 
 
@@ -74,15 +87,17 @@ function App() {
                         ['загрузить', 'upload'],
                     ]}
                     value={menu}
-                    onChange={menuChange}
+                    change={menuChange}
                 />
 
                 {selectedOption}
 
-                <ModalForResults open={modalState} closeHandler={modalHasClose} data={valuePersons} />
-
                 <Text text={config.liabilityText} />
             </Box>
+
+            <ModalForResults open={modalState} closeHandler={modalHasClose} data={valuePersons} />
+            <Snack open={snack[0]} text={snack[1]} severity={snack[2]} close={snackClose} />
+
         </Container>
     );
 }

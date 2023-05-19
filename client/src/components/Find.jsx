@@ -14,7 +14,7 @@ function Find(props) {
         const response = await axios.post(`${config.api}/api/post/search`, formData);
 
         if (!response.data.load) {
-            alert('Данные не были получены! Возможно программа не может распознать лицо на фото!');
+            props.setSnack([true, 'Данные не были получены, возможно на фото не возможно распознать лицо!', "error"])
         }
 
         return response.data;
