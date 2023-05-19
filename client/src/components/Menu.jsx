@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, ToggleButtonGroup, ToggleButton, Box } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import '../styles/Menu.css';
 
 
@@ -10,7 +10,7 @@ function Menu(props) {
             color="primary"
             value={props.value}
             exclusive
-            onChange={props.onChange}
+            onChange={props.change}
         >
             {props.buttons.map((data) => {
                 return (
