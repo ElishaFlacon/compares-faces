@@ -33,7 +33,7 @@ function PictureLoader({ picture, setPicture }) {
 
         return picture[0].name;
 
-    }, [picture])
+    }, [picture, loadState])
 
 
     return (
