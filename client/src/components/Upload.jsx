@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Button, Box, TextField } from '@mui/material';
 import axios from 'axios';
+import config from '../config';
 import '../styles/Upload.css';
 import PictureLoader from './PictureLoader';
 
@@ -31,7 +32,7 @@ function Upload(props) {
         }
 
         clear();
-        const response = await axios.post('http://localhost:5000/api/post/upload-person', formData);
+        const response = await axios.post(`${config.api}/api/post/upload-person`, formData);
 
         if (!response.data.load) {
             alert('Данные не были загружены! Возможно программа не может распознать лицо на фото!');
@@ -52,7 +53,7 @@ function Upload(props) {
         });
     }
 
-    
+
     return (
         <Box className={'ub-row ub-al-end gap'}>
 
