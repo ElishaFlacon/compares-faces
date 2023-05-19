@@ -1,0 +1,15 @@
+.choise-file {
+    background: url('../assets/choice_file.png') no-repeat;
+    background-size: 128px 128px;
+    width: 128px;
+    height: 128px;
+    padding-bottom: 16px;
+}
+
+.chosen-file {
+    background: url('../assets/choicen_file.png') no-repeat;
+    background-size: 128px 128px;
+    width: 128px;
+    height: 128px;
+    padding-bottom: 16px;
+}
