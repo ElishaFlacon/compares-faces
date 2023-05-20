@@ -14,7 +14,7 @@ function Find(props) {
         const response = await axios.post(`${config.api}/api/post/search`, formData);
 
         if (!response.data.load) {
-            props.setSnack([true, 'Данные не были получены, возможно на фото не возможно распознать лицо!', "error"])
+            props.setSnack([true, 'Данные не были получены, невозможно распознать лицо!', "error"])
         }
 
         return response.data;
@@ -35,7 +35,7 @@ function Find(props) {
         } catch (error) {
             props.modalClose();
             props.getPersons();
-            alert('Сервер умер!');
+            props.setSnack([true, 'Сервер не работает или произошла непредвиденная ошибка!', "error"]);
         }
     }
 

@@ -24,23 +24,27 @@ function Upload(props) {
     }
 
     const uploadPerson = async () => {
-        const formData = new FormData();
+        try {
+            const formData = new FormData();
 
-        formData.append('picture', props.picture[0]);
-        for (const [key, value] of Object.entries(person)) {
-            formData.append(key, value);
+            formData.append('picture', props.picture[0]);
+            for (const [key, value] of Object.entries(person)) {
+                formData.append(key, value);
+            }
+
+            clear();
+            const response = await axios.post(`${config.api}/api/post/upload-person`, formData);
+
+            if (!response.data.load) {
+                props.setSnack([true, 'Данные не были загружены, невозможно распознать лицо!', "error"])
+                return;
+            }
+            props.setSnack([true, 'Данные были загружены!', "success"])
+
+            return response.data;
+        } catch (error) {
+            props.setSnack([true, 'Сервер не работает или произошла непредвиденная ошибка!', "error"]);
         }
-
-        clear();
-        const response = await axios.post(`${config.api}/api/post/upload-person`, formData);
-
-        if (!response.data.load) {
-            props.setSnack([true, 'Данные не были загружены, возможно на фото не возможно распознать лицо!', "error"])
-            return;
-        }
-        props.setSnack([true, 'Данные были загружены!', "success"])
-
-        return response.data;
     }
 
     const clear = () => {
