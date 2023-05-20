@@ -14,7 +14,6 @@ class RecognizerService():
         result = DeepFace.verify(
             f'{self.upload_path}/{pic_1}',
             f'{self.upload_path}/{pic_2}',
-            enforce_detection=False
         )
 
         return {
