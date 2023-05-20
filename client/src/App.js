@@ -40,9 +40,6 @@ function App() {
         }
         setSnack(false);
     };
-    const snackOpen = (text, severity) => {
-        setSnack([true, severity, text]);
-    }
 
     // для меню выбора функции найти или загрузить
     const [menu, setMenu] = useState('find');
