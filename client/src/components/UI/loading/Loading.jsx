@@ -1,16 +1,14 @@
 import React from 'react';
 import { Box, CircularProgress } from '@mui/material';
-import '../styles/Loading.css';
+import classes from './Loading.module.css';
 
 
 function Loading(props) {
-
-
     return (
-        <Box className={'loading-container'}>
+        <Box className={classes.loading__container}>
             <CircularProgress size={`${props.size}px`} />
         </Box>
-    )
+    );
 }
 
 
