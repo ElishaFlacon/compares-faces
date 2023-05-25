@@ -3,6 +3,6 @@ import Upload from "../pages/Upload";
 
 
 export const routes = [
-    { path: '/find', component: Find },
-    { path: '/upload', component: Upload },
+    { path: 'dosy/find', component: Find },
+    { path: 'dosy/upload', component: Upload },
 ]

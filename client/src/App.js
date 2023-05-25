@@ -49,7 +49,7 @@ function App() {
                     <Text text={config.aboutText} />
 
                     <Menu
-                        buttons={[['найти', '/find'], ['загрузить', '/upload']]}
+                        buttons={[['найти', '/dosy/find'], ['загрузить', '/dosy/upload']]}
                         value={menu}
                         change={menuChange}
                     />
