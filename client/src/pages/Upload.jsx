@@ -1,75 +1,69 @@
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Button, Box, TextField } from '@mui/material';
-import axios from 'axios';
-import config from '../config';
+import UploadService from '../API/UploadService';
 import '../styles/Upload.css';
-import PictureLoader from './PictureLoader';
+import PictureLoader from '../components/PictureLoader';
+import { AppContext } from '../context';
+import { useFetching } from '../hooks/useFetching';
+import Loading from '../components/UI/loading/Loading';
 
 
-function Upload(props) {
+const personObject = {
+    name: '',
+    age: '',
+    gender: '',
+    description: '',
+}
 
-    const [person, setPerson] = useState({
-        name: '',
-        age: '',
-        gender: '',
-        description: '',
-    });
+
+function Upload() {
+    const { picture, setPicture, setSnack } = useContext(AppContext);
+    const [person, setPerson] = useState(personObject);
 
     const dataIsLoad = useMemo(() => {
-        return !Object.values(person).some(element => !element) && props.picture[0];
-    }, [person, props.picture])
+        return !Object.values(person).some(element => !element) && picture;
+    }, [person, picture])
 
     const changePerson = (value) => {
         setPerson({ ...person, ...value })
     }
 
-    const uploadPerson = async () => {
-        try {
-            const formData = new FormData();
-
-            formData.append('picture', props.picture[0]);
-            for (const [key, value] of Object.entries(person)) {
-                formData.append(key, value);
-            }
-
-            clear();
-            const response = await axios.post(`${config.api}/api/post/upload-person`, formData);
-
-            if (!response.data.load) {
-                props.setSnack([true, 'Данные не были загружены, невозможно распознать лицо!', "error"])
-                return;
-            }
-            props.setSnack([true, 'Данные были загружены!', "success"])
-
-            return response.data;
-        } catch (error) {
-            props.setSnack([true, 'Сервер не работает или произошла непредвиденная ошибка!', "error"]);
+    const [uploadPerson, isLoading, error] = useFetching(async () => {
+        const formData = new FormData();
+        formData.append('picture', picture[0]);
+        for (const [key, value] of Object.entries(person)) {
+            formData.append(key, value);
         }
-    }
+
+        clear();
+
+        const response = await UploadService.uploadPerson(formData);
+
+        if (!response.load) {
+            setSnack([true, 'Данные не были загружены, невозможно распознать лицо!', "error"])
+            return;
+        }
+
+        setSnack([true, 'Данные были загружены!', "success"])
+    })
 
     const clear = () => {
-        props.setPicture('')
-        setPerson({
-            name: '',
-            age: '',
-            gender: '',
-            description: '',
-        });
+        setPerson(personObject);
+        setPicture('');
     }
+
+    useEffect(() => {
+
+    }, [isLoading])
 
 
     return (
         <Box className={'ub-row ub-al-end gap'}>
-
-            <PictureLoader
-                picture={props.picture}
-                setPicture={props.setPicture}
-                onChange={() => changePerson({ picture: props.picture })}
-            />
+            <PictureLoader />
 
             <Box className="ub-column ub-jc-end gap">
-                <Box className={'ub-row gap'}>
-                    <Box className={'ub-column gap'}>
+                <Box className='ub-row gap'>
+                    <Box className='ub-column gap'>
                         <TextField
                             value={person.name}
                             onChange={(event) => changePerson({ name: event.target.value })}
@@ -103,7 +97,7 @@ function Upload(props) {
                 </Box>
 
                 <Button variant="outlined" component='button' disabled={!dataIsLoad} onClick={uploadPerson}>
-                    Загрузить
+                    {isLoading ? <Loading size={24} /> : 'Загрузить'}
                 </Button>
             </Box>
         </Box>
