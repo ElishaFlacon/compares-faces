@@ -1,10 +1,10 @@
 import React from 'react';
-import '../styles/DosyLogo.css';
+import classes from './DosyLogo.module.css';
 
 
 function DosyLogo() {
     return (
-        <div className="dosy-logo" />
+        <div className={classes.dosy__logo} />
     );
 }
 
