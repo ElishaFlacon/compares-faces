@@ -1,4 +1,4 @@
-.modal-container {
+.modal__container {
     position: absolute;
 
     display: flex;
@@ -17,16 +17,16 @@
     overflow-y: scroll;
 }
 
-.modal-container::-webkit-scrollbar {
+.modal__container::-webkit-scrollbar {
     width: 12px;
 }
 
-.modal-container::-webkit-scrollbar-track {
+.modal__container::-webkit-scrollbar-track {
     background: #fff;
     border-radius: 8px;
 }
 
-.modal-container::-webkit-scrollbar-thumb {
+.modal__container::-webkit-scrollbar-thumb {
     background-color: #9e9e9e;
     border: solid 2px #fff;
     border-radius: 8px;
