@@ -34,6 +34,8 @@ function App() {
     // но при этом в меню отображалась кнопка найти, а не загрузить
     useEffect(() => {
         setMenu(window.location.pathname);
+        // при использовании has router
+        // setMenu(window.location.hash.substring(1));
     }, [])
 
 
