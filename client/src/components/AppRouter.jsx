@@ -14,7 +14,7 @@ function AppRouter() {
                 />
             )}
 
-            <Route path='*' element={<Navigate to="dosy/find" replace />} />
+            <Route path='*' element={<Navigate to="/find" replace />} />
         </Routes>
 
     );
