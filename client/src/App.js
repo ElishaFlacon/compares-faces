@@ -7,7 +7,7 @@ import Menu from './components/Menu';
 import Snack from './components/UI/snackbar/Snack';
 import config from './config';
 import AppRouter from './components/AppRouter';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { AppContext } from './context';
 
 
@@ -49,7 +49,7 @@ function App() {
                     <Text text={config.aboutText} />
 
                     <Menu
-                        buttons={[['найти', '/dosy/find'], ['загрузить', '/dosy/upload']]}
+                        buttons={[['найти', '/find'], ['загрузить', '/upload']]}
                         value={menu}
                         change={menuChange}
                     />
