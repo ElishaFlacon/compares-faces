@@ -1,6 +1,7 @@
 from app.recognizer.recognizer_service import RecognizerService
 from db import DataBase
-
+import os
+import psycopg2
 
 database = DataBase()
 recognizerService = RecognizerService()
@@ -8,7 +9,7 @@ recognizerService = RecognizerService()
 
 class PersonService():
     def new_person(self, data):
-        connect = database.connect()
+        connect = psycopg2.connect(os.environ['DATABASE'])
         cursor = connect.cursor()
 
         cursor.execute(
@@ -44,7 +45,7 @@ class PersonService():
 
     # find person from database
     def find_person(self, picture):
-        connect = database.connect()
+        connect = psycopg2.connect(os.environ['DATABASE'])
         cursor = connect.cursor()
         result = []
 
