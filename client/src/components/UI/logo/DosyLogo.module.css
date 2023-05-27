@@ -4,3 +4,12 @@
     width: 388px;
     height: 170px;
 }
+
+@media screen and (max-width: 425px) {
+    .dosy__logo {
+        background: url('../../../assets/dosy_full_logo.png') no-repeat;
+        background-size: 194px 85px;
+        width: 194px;
+        height: 85px;
+    }
+}

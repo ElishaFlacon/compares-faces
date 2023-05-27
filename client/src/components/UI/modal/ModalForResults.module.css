@@ -31,3 +31,27 @@
     border: solid 2px #fff;
     border-radius: 8px;
 }
+
+@media screen and (max-width: 800px) {
+    .modal__container {
+        width: 550px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .modal__container {
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 525px) {
+    .modal__container {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 525px) {
+    .modal__container {
+        width: 228px;
+    }
+}
