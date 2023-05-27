@@ -5,6 +5,7 @@ from app.file.file_controller import FileController
 from app.recognizer.recognizer_controller import RecognizerController
 from app.person.person_controller import PersonController
 
+
 def create_app():
     app = Flask(__name__)
     cors = CORS(app)
@@ -14,14 +15,12 @@ def create_app():
     recognizerController = RecognizerController()
     personController = PersonController()
 
-
     @app.route('/api/get/image', methods=['GET'])
     @cross_origin()
     def get_image():
         file = request.args.get('name')
         path = f'app/static/{file}'
         return send_file(path, mimetype='image/png')
-
 
     @app.route('/api/post/upload-person', methods=['POST'])
     @cross_origin()
@@ -39,7 +38,6 @@ def create_app():
         result = personController.new_person(request.form, picture)
         return result
 
-
     @app.route('/api/post/compare', methods=['POST'])
     @cross_origin()
     def compare():
@@ -50,7 +48,6 @@ def create_app():
 
         result = recognizerController.comparison_faces(pictures)
         return result
-
 
     @app.route('/api/post/search', methods=['POST'])
     @cross_origin()
@@ -76,7 +73,6 @@ def create_app():
 
         return result
 
-
     @app.route('/api/post/detect', methods=['POST'])
     @cross_origin()
     def detect():
@@ -88,6 +84,6 @@ def create_app():
         result = recognizerController.detect_face(picture)
         return result
 
-
     # if __name__ == '__main__':
     #     app.run()
+    return app
