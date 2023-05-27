@@ -84,6 +84,11 @@ def create_app():
         result = recognizerController.detect_face(picture)
         return result
 
-    # if __name__ == '__main__':
-    #     app.run()
     return app
+
+
+# using for local hosting
+# and commented it for production
+# if __name__ == '__main__':
+#     app = create_app()
+#     app.run()
