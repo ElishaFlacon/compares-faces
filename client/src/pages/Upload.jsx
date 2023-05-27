@@ -58,7 +58,7 @@ function Upload() {
 
 
     return (
-        <Box className={'ub-row ub-al-end gap'}>
+        <Box className={'upload__container ub-row gap'}>
             <PictureLoader />
 
             <Box className="ub-column ub-jc-end gap">
