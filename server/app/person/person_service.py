@@ -8,8 +8,6 @@ recognizerService = RecognizerService()
 
 
 class PersonService():
-    upload_path = os.environ.get("UPLOAD_FOLDER_PATH")
-
     def new_person(self, data):
         database.cursor.execute(
             "INSERT INTO person (fullname, age, sex, descripton) VALUES (%s,%s,%s,%s) RETURNING *;",

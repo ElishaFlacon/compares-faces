@@ -7,7 +7,7 @@ database = DataBase()
 
 
 class RecognizerService():
-    upload_path = os.environ.get("UPLOAD_FOLDER_PATH")
+    upload_path = os.environ.get("STATIC_PATH")
 
     # comparison two faces
     def comparison_faces(self, pic_1, pic_2):
