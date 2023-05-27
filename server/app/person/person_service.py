@@ -8,9 +8,10 @@ recognizerService = RecognizerService()
 
 class PersonService():
     def new_person(self, data):
-        cur = database.connect.cursor()
+        connect = database.connect()
+        cursor = connect.cursor()
 
-        cur.execute(
+        cursor.execute(
             "INSERT INTO person (fullname, age, sex, descripton) VALUES (%s,%s,%s,%s) RETURNING *;",
             (
                 data.get('name'),
@@ -20,18 +21,18 @@ class PersonService():
             )
         )
 
-        person = cur.fetchall()
+        person = cursor.fetchall()
         person_id = person[0][0]
 
-        cur.execute(
+        cursor.execute(
             "INSERT INTO faces (picture, person_id) VALUES (%s, %s) RETURNING *;",
             (data.get('picture'), person_id)
         )
 
-        picture_data = cur.fetchall()
+        picture_data = cursor.fetchall()
 
         # save data to database
-        database.connect.commit()
+        connect.commit()
 
         return {
             'load': True,
@@ -43,11 +44,12 @@ class PersonService():
 
     # find person from database
     def find_person(self, picture):
-        cur = database.connect.cursor()
+        connect = database.connect()
+        cursor = connect.cursor()
         result = []
 
-        cur.execute("SELECT * FROM faces;")
-        data = cur.fetchall()
+        cursor.execute("SELECT * FROM faces;")
+        data = cursor.fetchall()
 
         for item in data:
             db_picture = item[1]
@@ -57,9 +59,9 @@ class PersonService():
             if not (verify['verified']):
                 continue
 
-            cur.execute(
+            cursor.execute(
                 "SELECT * FROM person WHERE id=%s;", (item[2],))
-            person = cur.fetchall()
+            person = cursor.fetchall()
             result.append({
                 'picture': item[1],
                 'name': person[0][1],
