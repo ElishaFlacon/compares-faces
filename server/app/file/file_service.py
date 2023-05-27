@@ -13,7 +13,13 @@ class FileService():
         filename = f'{uuid.uuid4()}.png'
 
         # save file
-        path = os.path.join(os.environ.get('UPLOAD_FOLDER_PATH'), filename)
+        path = os.path.join(os.environ.get('STATIC_PATH'), filename)
         file.save(path)
 
         return filename
+
+    def remove_file(self, file):
+        if (not file):
+            return
+
+        os.remove(f'{os.environ.get("STATIC_PATH")}/{file}')

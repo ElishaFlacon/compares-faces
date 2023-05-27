@@ -45,3 +45,10 @@ class FileController():
         except Exception as e:
             print(e)
             raise Exception('bad request: 400')
+
+    def remove_file(self, file):
+        try:
+            fileService.remove_file(file)
+        except Exception as e:
+            print(e)
+            raise Exception('bad request: 400')

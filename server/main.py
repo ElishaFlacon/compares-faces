@@ -33,6 +33,7 @@ def upload_person():
 
     face_detect = recognizerController.detect_face(picture)
     if (not face_detect.get('detect')):
+        fileController.remove_file(picture)
         return {'load': False}
 
     result = personController.new_person(request.form, picture)
@@ -65,9 +66,14 @@ def search():
 
     face_detect = recognizerController.detect_face(picture)
     if (not face_detect.get('detect')):
+        fileController.remove_file(picture)
         return {'load': False}
 
     result = personController.find_person(picture)
+
+    # remove because it is not needed
+    fileController.remove_file(picture)
+
     return result
 
 
