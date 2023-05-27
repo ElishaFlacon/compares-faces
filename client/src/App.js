@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
-import './App.css';
+import './styles/App.css';
 import DosyLogo from './components/UI/logo/DosyLogo';
 import Text from './components/Text';
 import Menu from './components/Menu';
@@ -59,6 +59,8 @@ function App() {
                     <AppRouter />
 
                     <Text text={config.liabilityText} />
+                    <Text text={config.warningText} />
+                    <Text text={<a href="https://github.com/ElishaFlacon/dosy">GitHub</a>} />
                 </Box>
 
                 <Snack open={snack[0]} text={snack[1]} severity={snack[2]} close={snackClose} />
