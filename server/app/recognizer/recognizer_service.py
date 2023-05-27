@@ -1,9 +1,5 @@
 from deepface import DeepFace
-from db import DataBase
 import os
-
-
-database = DataBase()
 
 
 class RecognizerService():

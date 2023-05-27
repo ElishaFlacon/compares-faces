@@ -1,6 +1,5 @@
 from app.recognizer.recognizer_service import RecognizerService
 from db import DataBase
-import os
 
 
 database = DataBase()
@@ -9,7 +8,7 @@ recognizerService = RecognizerService()
 
 class PersonService():
     def new_person(self, data):
-        database.cursor.execute(
+        database.connect.cursor().execute(
             "INSERT INTO person (fullname, age, sex, descripton) VALUES (%s,%s,%s,%s) RETURNING *;",
             (
                 data.get('name'),
@@ -19,15 +18,15 @@ class PersonService():
             )
         )
 
-        person = database.cursor.fetchall()
+        person = database.connect.cursor().fetchall()
         person_id = person[0][0]
 
-        database.cursor.execute(
+        database.connect.cursor().execute(
             "INSERT INTO faces (picture, person_id) VALUES (%s, %s) RETURNING *;",
             (data.get('picture'), person_id)
         )
 
-        picture_data = database.cursor.fetchall()
+        picture_data = database.connect.cursor().fetchall()
 
         # save data to database
         database.connect.commit()
@@ -44,8 +43,8 @@ class PersonService():
     def find_person(self, picture):
         result = []
 
-        database.cursor.execute("SELECT * FROM faces;")
-        data = database.cursor.fetchall()
+        database.connect.cursor().execute("SELECT * FROM faces;")
+        data = database.connect.cursor().fetchall()
 
         for item in data:
             db_picture = item[1]
@@ -55,9 +54,9 @@ class PersonService():
             if not (verify['verified']):
                 continue
 
-            database.cursor.execute(
+            database.connect.cursor().execute(
                 "SELECT * FROM person WHERE id=%s;", (item[2],))
-            person = database.cursor.fetchall()
+            person = database.connect.cursor().fetchall()
             result.append({
                 'picture': item[1],
                 'name': person[0][1],
