@@ -57,7 +57,7 @@ def create_app():
 
         if (not picture):
             picture = fileController.upload_picture(request.files)
-
+        print(picture)
         if (not picture):
             return 'error'
 
@@ -65,7 +65,7 @@ def create_app():
         if (not face_detect.get('detect')):
             fileController.remove_file(picture)
             return {'load': False}
-
+        print('asdasdasdasdasd')
         result = personController.find_person(picture)
 
         # remove because it is not needed

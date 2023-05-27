@@ -49,7 +49,7 @@ class PersonService():
 
         for item in data:
             db_picture = item[1]
-
+            print(db_picture)
             verify = recognizerService.comparison_faces(picture, db_picture)
 
             if not (verify['verified']):
