@@ -51,7 +51,7 @@
      - `cd client`
      - `npm install`
      - `npm audit fix` (если появились ошибки)
-     - меняем адрес API в файлах API/Service, должно получиться `<адрес_api>/api/.../...`
+     - меняем адрес API в файле `package.json`, в строке `proxy: <адрес_api>`
 - Собираем back-end:
      - `cd server`
      - `python -m venv <venv_name>`
@@ -99,9 +99,8 @@
  📺 Демо:
 </h2>
 
-- <a href="https://github.com/ElishaFlacon/dosy/assets/83610362/a91040b3-0258-4a6f-adf4-96846c033a35">Нажать чтобы демо!</a>
-- <video src="https://github.com/ElishaFlacon/dosy/assets/83610362/a91040b3-0258-4a6f-adf4-96846c033a35" />
-
+- <a href="https://github.com/ElishaFlacon/dosy/assets/83610362/8b1dbc19-d28b-4ab1-bfbb-217ae3c9d01c">Нажать чтобы демо!</a>
+- <video src="https://github.com/ElishaFlacon/dosy/assets/83610362/8b1dbc19-d28b-4ab1-bfbb-217ae3c9d01c" />
 
 
 
