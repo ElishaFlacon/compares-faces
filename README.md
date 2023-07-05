@@ -30,11 +30,11 @@ Fullstack приложение - сравнивает сходства лиц
 
 
 <h2>
-  🚀 Зпуск приложения (пока что не работает):
+  🚀 Зпуск приложения:
 </h2>
 
-- git clone https://github.com/ElishaFlacon/compares-faces.git
-- cd compares-faces
+- download SERVER and CLIENT branch
+- cd server
 - cd client (устанавливаем клиентскую часть)
 - npm install
 - npm audit fix (если появились ошибки)
