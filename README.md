@@ -99,8 +99,9 @@
  📺 Демо:
 </h2>
 
-- <a href="https://github.com/ElishaFlacon/dosy/assets/83610362/8b1dbc19-d28b-4ab1-bfbb-217ae3c9d01c">Нажать чтобы демо!</a>
-- <video src="https://github.com/ElishaFlacon/dosy/assets/83610362/8b1dbc19-d28b-4ab1-bfbb-217ae3c9d01c" />
+- <a href="https://eelisey.ru/dosy/">Нажать чтобы демо!</a>
+- <a href="https://github.com/ElishaFlacon/dosy/assets/83610362/4a8fe08c-e99e-437c-85a5-a224e8813ffb">Нажать чтобы демо видео!</a>
+- <video src="https://github.com/ElishaFlacon/dosy/assets/83610362/4a8fe08c-e99e-437c-85a5-a224e8813ffb" />
 
 
 
