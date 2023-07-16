@@ -1,5 +1,5 @@
 .sad {
-    background: url('../../../assets/choice_file.png') no-repeat;
+    background: url('../../../assets/choice_file.svg') no-repeat;
     background-size: 128px 128px;
     width: 128px;
     height: 128px;
@@ -7,7 +7,7 @@
 }
 
 .fun {
-    background: url('../../../assets/choicen_file.png') no-repeat;
+    background: url('../../../assets/choicen_file.svg') no-repeat;
     background-size: 128px 128px;
     width: 128px;
     height: 128px;
@@ -16,14 +16,14 @@
 
 @media screen and (max-width: 700px) {
     .sad {
-        background: url('../../../assets/choice_file.png') no-repeat;
+        background: url('../../../assets/choice_file.svg') no-repeat;
         background-size: 96px 96px;
         width: 96px;
         height: 96px;
     }
 
     .fun {
-        background: url('../../../assets/choice_file.png') no-repeat;
+        background: url('../../../assets/choice_file.svg') no-repeat;
         background-size: 96px 96px;
         width: 96px;
         height: 96px;
