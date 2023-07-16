@@ -33,9 +33,14 @@ function App() {
     // без этого use effect, при перезагрузке страницы, мы бы находились по адрессу /upload
     // но при этом в меню отображалась кнопка найти, а не загрузить
     useEffect(() => {
-        setMenu(window.location.pathname);
-        // при использовании has router
-        // setMenu(window.location.hash.substring(1));
+        if (['/find', '/upload'].includes(window.location.pathname)) {
+            // при использовании has router
+            // setMenu(window.location.hash.substring(1));
+            setMenu(window.location.pathname);
+            return;
+        }
+
+        setMenu('/find');
     }, [])
 
 
